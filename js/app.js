@@ -13,8 +13,13 @@ App.PlayerList = EmberFire.Array.extend({
     var firebase = new Firebase(this.get('firebaseURI'));
     this.set('ref', firebase);
     this._super();
-  }
-})
+  },
+});
+
+App.PlayerList.InjectFixtures = function(){
+  var list = App.PlayerList.create();
+  list.pushObjects(App.Player.FIXTURES);
+};
 
 App.Player = DS.Model.extend({
   name: DS.attr(),
