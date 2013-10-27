@@ -6,6 +6,16 @@ App.Router.map(function() {
   this.resource("leaderboard", {path: "/"});
 });
 
+App.PlayerList = EmberFire.Array.extend({
+  firebaseURI: "https://ember-meteor-leaderboard.firebaseio.com/players",
+
+  init: function(){
+    var firebase = new Firebase(this.get('firebaseURI'));
+    this.set('ref', firebase);
+    this._super();
+  }
+})
+
 App.Player = DS.Model.extend({
   name: DS.attr(),
   score: DS.attr('integer')
@@ -22,7 +32,7 @@ App.Player.FIXTURES = [
 
 App.LeaderboardRoute = Ember.Route.extend({
   model: function() {
-    return this.get('store').find('player');
+    return App.PlayerList.create();
   }
 });
 
@@ -37,7 +47,11 @@ App.SelectedPlayerController = Ember.ObjectController.extend({
   actions: {
     addPoints: function(){
       var model = this.get('model');
-      model.incrementProperty('score', 5);
+      var score = model.score;
+
+      // TODO: increment the property,
+      // and push it back to firebase
+      model.score = score + 5;
     }
   }
 })
