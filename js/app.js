@@ -12,12 +12,12 @@ App.Player = DS.Model.extend({
 });
 
 App.Player.FIXTURES = [
-  {id: 1, name: "Ada Lovelace",         score:  5},
-  {id: 2, name: "Grace Hopper",         score: 10},
-  {id: 3, name: "Marie Curie",          score: 25},
-  {id: 4, name: "Carl Friedrich Gauss", score: 10},
-  {id: 5, name: "Nikola Tesla",         score: 20},
-  {id: 6, name: "Claude Shannon",       score: 30}
+  {name: "Ada Lovelace",         score:  5},
+  {name: "Grace Hopper",         score: 10},
+  {name: "Marie Curie",          score: 25},
+  {name: "Carl Friedrich Gauss", score: 10},
+  {name: "Nikola Tesla",         score: 20},
+  {name: "Claude Shannon",       score: 30}
 ];
 
 App.LeaderboardRoute = Ember.Route.extend({
