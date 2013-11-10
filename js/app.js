@@ -6,7 +6,7 @@ App.Router.map(function() {
   this.resource("leaderboard", {path: "/"});
 });
 
-App.PlayerList = EmberFire.Array.extend({
+App.PlayerList = EmberFire.ObjectArray.extend({
   firebaseURI: "https://ember-meteor-leaderboard.firebaseio.com/players",
 
   init: function(){
@@ -42,8 +42,15 @@ App.LeaderboardRoute = Ember.Route.extend({
 });
 
 App.LeaderboardController = Ember.ArrayController.extend({
-  playerSorting: ["score:desc", "name:asc"],
-  players: Ember.computed.sort('content', 'playerSorting')
+  // playerSorting: ["score:desc", "name:asc"],
+  // players: Ember.computed.sort('content', 'playerSorting')
+  players: function(){
+    return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
+      content: this.get('content'),
+      sortProperties: ['score'],
+      sortAscending: false
+    });
+  }.property('content')
 });
 
 App.SelectedPlayerController = Ember.ObjectController.extend({
@@ -52,11 +59,7 @@ App.SelectedPlayerController = Ember.ObjectController.extend({
   actions: {
     addPoints: function(){
       var model = this.get('model');
-      var score = model.score;
-
-      // TODO: increment the property,
-      // and push it back to firebase
-      model.score = score + 5;
+      model.incrementProperty('score', 5);
     }
   }
 })
