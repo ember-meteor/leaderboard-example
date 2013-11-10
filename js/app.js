@@ -1,7 +1,5 @@
 App = Ember.Application.create();
 
-App.ApplicationAdapter = DS.FixtureAdapter;
-
 App.Router.map(function() {
   this.resource("leaderboard", {path: "/"});
 });
@@ -18,15 +16,10 @@ App.PlayerList = EmberFire.ObjectArray.extend({
 
 App.PlayerList.InjectFixtures = function(){
   var list = App.PlayerList.create();
-  list.pushObjects(App.Player.FIXTURES);
+  list.pushObjects(App.PLAYER_FIXTURES);
 };
 
-App.Player = DS.Model.extend({
-  name: DS.attr(),
-  score: DS.attr('integer')
-});
-
-App.Player.FIXTURES = [
+App.PLAYER_FIXTURES = [
   {name: "Ada Lovelace",         score:  5},
   {name: "Grace Hopper",         score: 10},
   {name: "Marie Curie",          score: 25},
